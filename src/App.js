@@ -1,25 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
+
+import Header from './components/Header'
+import TopPage from './components/Top/TopPage'
+import UsersPage from './components/User/UsersPage'
+import UserForm from './components/User/UserForm'
+import firebase, { FirebaseContext } from './firebase'
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <FirebaseContext.Provider value={{firebase}}>
+        <div className="app">
+          <Header />
+          <Switch>
+            <Route path="/" exact component={TopPage} />
+            <Route path="/users" exact component={UsersPage} />
+            <Route path="/users/new" exact component={UserForm} />
+          </Switch>
+        </div>
+      </FirebaseContext.Provider>
+    </BrowserRouter>
   );
 }
 
